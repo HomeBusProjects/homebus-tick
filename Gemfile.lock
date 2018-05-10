@@ -1,0 +1,22 @@
+GIT
+  remote: git@github.com:romkey/ruby-homebus.git
+  revision: 1488352955902bb9523fdca2ece5fe1e610d8bf7
+  specs:
+    homebus (0.1.5)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    dotenv (2.4.0)
+    mqtt (0.5.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  dotenv
+  homebus!
+  mqtt
+
+BUNDLED WITH
+   1.16.1
