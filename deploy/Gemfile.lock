@@ -32,7 +32,6 @@ PLATFORMS
 
 DEPENDENCIES
   bugsnag
-  bundler
   capistrano
   capistrano-bundler
   capistrano-rbenv

@@ -23,7 +23,23 @@ pp mqtt
 if mqtt[:host].nil?
   puts 'host is nil'
 
-  mqtt = HomeBus.provision "00:11:22:33:44:55"
+  mqtt = HomeBus.provision serial_number: '00-00-00-00',
+                           manufacturer: 'Homebus',
+                           model: 'tick',
+                           friendly_name: 'System Ticker',
+                           pin: '',
+                           devices: [ {
+                                        friendly_name: 'System Ticker',
+                                        friendly_location: 'The Core',
+                                        update_frequency: 1000,
+                                        accuracy: 10,
+                                        precision: 100,
+                                        wo_topics: [ 'tick' ],
+                                        ro_topics: [],
+                                        rw_topics: []
+                                      } ]
+                                                        
+  
   unless mqtt
     abort 'MQTT provisioning failed'
   end
