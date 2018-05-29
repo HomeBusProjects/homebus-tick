@@ -55,13 +55,22 @@ client = MQTT::Client.connect mqtt
 loop do 
   tick_msg = {
     uuid: uuid,
-    seconds_since_epoch: Time.now.to_i
+    timestamp: Time.now.to_i,
+    year: Time.now.year,
+    month: Time.now.month,
+    month_day: Time.now.mday,
+    weekday: Time.now.wday,
+    hour: Time.now.hour,
+    minute: Time.now.min,
+    second: Time.now.sec
+    timezone_code: Time.now.zone,
+    timezone_offset: Time.now.utc_offset
   }
 
   puts 'about to tick'
   pp tick_msg
   
-  client.publish('/tick', tick_msg.to_json, true)
+  client.publish('tick', tick_msg.to_json, true)
   puts 'ticked'
 
   sleep 1            
