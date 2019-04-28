@@ -10,7 +10,7 @@ Dotenv.load '.env.provision'
 
 require 'homebus'
 
-opts = []
+opts = {}
 
 mqtt = { host: ENV['MQTT_HOSTNAME'],
          port: ENV['MQTT_PORT'],
@@ -40,8 +40,9 @@ if mqtt[:host].nil?
                                         wo_topics: [ 'tick' ],
                                         ro_topics: [],
                                         rw_topics: []
-                                      } ]
-                                                        
+                                      } ],
+                           provisioner_name: 'localhost',
+                           provisioner_port: 3000
   
   unless mqtt
     abort 'MQTT provisioning failed'
