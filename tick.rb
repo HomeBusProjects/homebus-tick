@@ -1,80 +1,97 @@
 #!/usr/bin/env ruby
 
 require 'mqtt'
-require 'dotenv/load'
 require 'json'
-require 'net/http'
-require 'pp'
-
-Dotenv.load '.env.provision'
 
 require 'homebus'
+require 'homebus_app'
+require 'homebus_app_options'
 
-opts = {}
+require 'pp'
 
-mqtt = { host: ENV['MQTT_HOSTNAME'],
-         port: ENV['MQTT_PORT'],
-         username: ENV['MQTT_USERNAME'],
-         password: ENV['MQTT_PASSWORD'],
-       }
-
-uuid = ENV['UUID']
-
-pp mqtt if opts[:debug]
-
-
-if mqtt[:host].nil?
-  puts 'host is nil'
-
-  mqtt = HomeBus.provision serial_number: '00-00-00-00',
-                           manufacturer: 'Homebus',
-                           model: 'tick',
-                           friendly_name: 'System Ticker',
-                           pin: '',
-                           devices: [ {
-                                        friendly_name: 'System Ticker',
-                                        friendly_location: 'The Core',
-                                        update_frequency: 1000,
-                                        accuracy: 10,
-                                        precision: 100,
-                                        wo_topics: [ 'tick' ],
-                                        ro_topics: [],
-                                        rw_topics: []
-                                      } ],
-                           provisioner_name: 'localhost',
-                           provisioner_port: 3000
-  
-  unless mqtt
-    abort 'MQTT provisioning failed'
+class TickHomeBusAppOptions < HomeBusAppOptions
+  def app_options(op)
   end
 
-  pp mqtt if opts[:debug]
+  def banner
+    'HomeBus Ticker'
+  end
 
-  uuid = mqtt[:uuid]
-  mqtt.delete :uuid
+  def version
+    '0.0.1'
+  end
+
+  def name
+    'homebus-tick'
+  end
 end
 
-client = MQTT::Client.connect mqtt
+class TickHomeBusApp < HomeBusApp
+  def setup!
+    @options[:verbose] = true
+  end
 
-loop do 
-  tick_msg = {
-    uuid: uuid,
-    timestamp: Time.now.to_i,
-    year: Time.now.year,
-    month: Time.now.month,
-    month_day: Time.now.mday,
-    weekday: Time.now.wday,
-    hour: Time.now.hour,
-    minute: Time.now.min,
-    second: Time.now.sec,
-    timezone_code: Time.now.zone,
-    timezone_offset: Time.now.utc_offset
-  }
+  def work!
+    tick_msg = {
+      uuid: @uuid,
+      timestamp: Time.now.to_i,
+      year: Time.now.year,
+      month: Time.now.month,
+      month_day: Time.now.mday,
+      weekday: Time.now.wday,
+      hour: Time.now.hour,
+      minute: Time.now.min,
+      second: Time.now.sec,
+      timezone_code: Time.now.zone,
+      timezone_offset: Time.now.utc_offset
+    }
 
-  pp tick_msg if opts[:verbose]
+    pp tick_msg if @options[:verbose]
   
-  client.publish('tick', tick_msg.to_json, true)
-  puts 'ticked' if opts[:verbose]
+    @mqtt.publish('tick', tick_msg.to_json, true)
 
-  sleep 1            
+    sleep 1
+  end
+
+  def manufacturer
+    'HomeBus'
+  end
+
+  def model
+    'Basic'
+  end
+
+  def friendly_name
+    'Ticker'
+  end
+
+  def friendly_location
+    'HomeBus Core'
+  end
+
+  def serial_number
+    ''
+  end
+
+  def pin
+    ''
+  end
+
+  def devices
+    [ {
+        friendly_name: 'System Ticker',
+        friendly_location: 'The Core',
+        update_frequency: 1000,
+        accuracy: 10,
+        precision: 100,
+        wo_topics: [ 'tick' ],
+        ro_topics: [],
+        rw_topics: []
+      } ]
+  end
 end
+
+tick_app_options = TickHomeBusAppOptions.new
+
+tick = TickHomeBusApp.new tick_app_options.options
+tick.run!
