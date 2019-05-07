@@ -33,7 +33,7 @@ class TickHomeBusApp < HomeBusApp
 
   def work!
     tick_msg = {
-      uuid: @uuid,
+      id: @uuid,
       timestamp: Time.now.to_i,
       year: Time.now.year,
       month: Time.now.month,
@@ -48,7 +48,7 @@ class TickHomeBusApp < HomeBusApp
 
     pp tick_msg if @options[:verbose]
   
-    @mqtt.publish('tick', tick_msg.to_json, true)
+    @mqtt.publish('/tick', tick_msg.to_json, true)
 
     sleep 1
   end
