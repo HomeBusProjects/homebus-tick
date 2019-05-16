@@ -28,7 +28,6 @@ end
 
 class TickHomeBusApp < HomeBusApp
   def setup!
-    @options[:verbose] = true
   end
 
   def work!
@@ -46,7 +45,9 @@ class TickHomeBusApp < HomeBusApp
       timezone_offset: Time.now.utc_offset
     }
 
-    pp tick_msg if @options[:verbose]
+    if @options[:verbose]
+      pp tick_msg if @options[:verbose]
+    end
   
     @mqtt.publish('/tick', tick_msg.to_json, true)
 
