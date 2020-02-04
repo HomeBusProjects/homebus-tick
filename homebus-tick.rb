@@ -34,6 +34,7 @@ class TickHomeBusApp < HomeBusApp
     tick_msg = {
       id: @uuid,
       timestamp: Time.now.to_i,
+
       year: Time.now.year,
       month: Time.now.month,
       month_day: Time.now.mday,
@@ -43,6 +44,18 @@ class TickHomeBusApp < HomeBusApp
       second: Time.now.sec,
       timezone_code: Time.now.zone,
       timezone_offset: Time.now.utc_offset
+
+      'org.homebus.tick': {
+                            year: Time.now.year,
+                            month: Time.now.month,
+                            month_day: Time.now.mday,
+                            weekday: Time.now.wday,
+                            hour: Time.now.hour,
+                            minute: Time.now.min,
+                            second: Time.now.sec,
+                            timezone_code: Time.now.zone,
+                            timezone_offset: Time.now.utc_offset
+                          }
     }
 
     if @options[:verbose]
