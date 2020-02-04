@@ -27,5 +27,5 @@ Data is published as 'org.homebus.tick':
 - hour: two digit hour number, 0 - 23
 - minute:  two digit minute number, 0 - 59
 - second:  two digit second number, 0 - 59
-- timezone_code: text timezone code, for instance ""
+- timezone_code: text timezone code, for instance "PST"
 - numeric timezone offset from UTC
