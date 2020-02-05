@@ -36,6 +36,7 @@ class TickHomeBusApp < HomeBusApp
       timestamp: Time.now.to_i,
 
       'org.homebus.tick': {
+                            epoch: Time.now.to_i,
                             year: Time.now.year,
                             month: Time.now.month,
                             month_day: Time.now.mday,
