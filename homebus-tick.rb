@@ -27,7 +27,7 @@ class TickHomeBusAppOptions < HomeBusAppOptions
 end
 
 class TickHomeBusApp < HomeBusApp
-  DDC = 'org.homebus.tick'
+  DDC = 'org.homebus.experimental.tick'
 
   def setup!
   end
