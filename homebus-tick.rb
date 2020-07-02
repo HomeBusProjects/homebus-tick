@@ -10,6 +10,8 @@ require 'homebus_app_options'
 require 'pp'
 
 class TickHomeBusAppOptions < HomeBusAppOptions
+  DDC = 'org.homebus.tick'
+
   def app_options(op)
   end
 
@@ -31,29 +33,33 @@ class TickHomeBusApp < HomeBusApp
   end
 
   def work!
-    tick_msg = {
-      id: @uuid,
-      timestamp: Time.now.to_i,
+    t = Time.now
 
-      'org.homebus.tick': {
-                            epoch: Time.now.to_i,
-                            year: Time.now.year,
-                            month: Time.now.month,
-                            month_day: Time.now.mday,
-                            weekday: Time.now.wday,
-                            hour: Time.now.hour,
-                            minute: Time.now.min,
-                            second: Time.now.sec,
-                            timezone_code: Time.now.zone,
-                            timezone_offset: Time.now.utc_offset
-                          }
+    tick_msg = {
+      source: @uuid,
+      timestamp: t.to_i,
+      contents: {
+        ddc: DDC,
+        payload: {
+          epoch: t.to_i,
+          year: t.year,
+          month: t.month,
+          month_day: t.mday,
+          weekday: t.wday,
+          hour: t.hour,
+          minute: t.min,
+          second: t.sec,
+          timezone_code: t.zone,
+          timezone_offset: t.utc_offset
+        }
+      }
     }
 
     if @options[:verbose]
-      pp tick_msg if @options[:verbose]
+      pp tick_msg
     end
   
-    @mqtt.publish('/tick', tick_msg.to_json, true)
+    publish! DDC, tick_msg
 
     sleep 1
   end
@@ -89,7 +95,7 @@ class TickHomeBusApp < HomeBusApp
         update_frequency: 1000,
         accuracy: 10,
         precision: 100,
-        wo_topics: [ 'tick' ],
+        wo_topics: [ DDC ],
         ro_topics: [],
         rw_topics: []
       } ]
