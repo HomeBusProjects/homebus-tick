@@ -10,8 +10,6 @@ require 'homebus_app_options'
 require 'pp'
 
 class TickHomeBusAppOptions < HomeBusAppOptions
-  DDC = 'org.homebus.tick'
-
   def app_options(op)
   end
 
@@ -29,6 +27,8 @@ class TickHomeBusAppOptions < HomeBusAppOptions
 end
 
 class TickHomeBusApp < HomeBusApp
+  DDC = 'org.homebus.tick'
+
   def setup!
   end
 
