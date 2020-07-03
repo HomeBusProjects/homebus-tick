@@ -18,7 +18,7 @@ class TickHomeBusAppOptions < HomeBusAppOptions
   end
 
   def version
-    '0.0.1'
+    '0.9.0'
   end
 
   def name
@@ -36,23 +36,16 @@ class TickHomeBusApp < HomeBusApp
     t = Time.now
 
     tick_msg = {
-      source: @uuid,
-      timestamp: t.to_i,
-      contents: {
-        ddc: DDC,
-        payload: {
-          epoch: t.to_i,
-          year: t.year,
-          month: t.month,
-          month_day: t.mday,
-          weekday: t.wday,
-          hour: t.hour,
-          minute: t.min,
-          second: t.sec,
-          timezone_code: t.zone,
-          timezone_offset: t.utc_offset
-        }
-      }
+      epoch: t.to_i,
+      year: t.year,
+      month: t.month,
+      month_day: t.mday,
+      weekday: t.wday,
+      hour: t.hour,
+      minute: t.min,
+      second: t.sec,
+      timezone_code: t.zone,
+      timezone_offset: t.utc_offset
     }
 
     if @options[:verbose]
