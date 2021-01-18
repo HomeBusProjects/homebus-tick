@@ -2,9 +2,9 @@
 
 require 'mqtt'
 require 'json'
-require './homebus'
-require './homebus_app'
-require './homebus_app_options'
+require 'homebus'
+require 'homebus_app'
+require 'homebus_app_options'
 require './app'
 require './options'
 
