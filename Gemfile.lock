@@ -11,7 +11,7 @@ GEM
     mqtt (0.5.0)
 
 PLATFORMS
-  ruby
+  arm64-darwin-20
 
 DEPENDENCIES
   dotenv
@@ -19,4 +19,4 @@ DEPENDENCIES
   mqtt
 
 BUNDLED WITH
-   1.17.2
+   2.2.31
