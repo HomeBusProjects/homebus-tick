@@ -1,4 +1,4 @@
-class TickHomeBusAppOptions < HomeBusAppOptions
+class TickHomebusAppOptions < Homebus::Options
   def app_options(op)
   end
 

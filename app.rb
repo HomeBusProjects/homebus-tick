@@ -1,8 +1,18 @@
-class TickHomeBusApp < HomeBusApp
+# coding: utf-8
+require 'homebus'
+require 'dotenv'
+
+require 'time'
+
+class TickHomebusApp < Homebus::App
   DDC_TICK = 'org.homebus.experimental.tick'
   DDC_CLOCK = 'org.homebus.experimental.clock'
 
   def setup!
+    @device = Homebus::Device.new name: 'Homebus ticker',
+                                  manufacturer: 'Homebus',
+                                  model: 'Ticker',
+                                  serial_number: ''
   end
 
   def work!
@@ -36,26 +46,15 @@ class TickHomeBusApp < HomeBusApp
     sleep 1
   end
 
-  def manufacturer
-    'HomeBus'
+  def name
+    'Homebus ticker'
   end
 
-  def model
-    'Core'
-  end
-
-  def serial_number
-    ''
-  end
-
-  def pin
-    ''
-  end
-
-  def publish_ddcs
+  def publishes
     [ DDC_TICK, DDC_CLOCK ]
   end
 
-  def consume_ddcs
+  def devices
+    [ @device ]
   end
 end
