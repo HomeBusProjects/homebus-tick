@@ -1,4 +1,8 @@
-class TickHomebusAppOptions < Homebus::Options
+require 'homebus/options'
+
+require 'homebus-tick/version'
+
+class HomebusTick::Options < Homebus::Options
   def app_options(op)
   end
 
@@ -7,7 +11,7 @@ class TickHomebusAppOptions < Homebus::Options
   end
 
   def version
-    '0.9.0'
+    HomebusTick::VERSION
   end
 
   def name

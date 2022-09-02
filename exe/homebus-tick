@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'homebus-tick/options'
+require 'homebus-tick/app'
+
+options = HomebusTick::Options.new
+app = HomebusTick::App.new(options.options)
+app.run!
+

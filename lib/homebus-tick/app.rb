@@ -4,7 +4,7 @@ require 'dotenv'
 
 require 'time'
 
-class TickHomebusApp < Homebus::App
+class HomebusTick::App < Homebus::App
   DDC_TICK = 'org.homebus.experimental.tick'
   DDC_CLOCK = 'org.homebus.experimental.clock'
 
