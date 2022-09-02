@@ -40,8 +40,8 @@ class HomebusTick::App < Homebus::App
   
     # this will likely cause us to mmiss a tick once in a while
     # instead we should do something like sleep, wakeup, fork a child to do the work and sleep again
-    publish! DDC_TICK, tick_msg
-    publish! DDC_CLOCK, clock_msg
+    @device.publish! DDC_TICK, tick_msg
+    @device.publish! DDC_CLOCK, clock_msg
 
     sleep 1
   end
